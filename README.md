@@ -59,7 +59,7 @@ expo start
 ```
 
 ### Testes Unitários x Testes E2E
-**Testes unitários** focam em testes voltados para partes específicas da aplicação. Tendo como principal objetivo verificar se essas partes funcionam de maneira isolada das demais partes do sistema. No GameStash eles são utilizados para testar os componentes: ActionSheet + lista de ordenaçao e Counter do Bookmark.
+**Testes unitários** focam em testes voltados para partes específicas da aplicação. Tendo como principal objetivo verificar se essas partes funcionam de maneira isolada das demais partes do sistema. No GameStash eles são utilizados para testar os componentes: Lista de ordenaçao e Counter do Bookmark.
 
 Já os **testes E2E** englobam um contexto maior da aplicação, simulando fluxos que o usuário comum realizaria ao navegar por funcionalidades. Pemitindo a validação de elementos da interface até o backend da aplicação, que auxilia na identificação de problemas reais que usuário podem enfrentar.
 
