@@ -1,0 +1,18 @@
+appId: host.exp.exponent
+---
+
+# teste o scroll horizontal do carrosel
+
+- openLink: exp://q4ng5ge-anonymous-8081.exp.direct
+
+- swipe:
+    on:
+      id: "carousel"
+    direction: left
+    duration: 500
+
+- swipe:
+    on:
+      id: "carousel"
+    direction: right
+    duration: 500

@@ -1,0 +1,16 @@
+appId: host.exp.exponent
+---
+
+# teste se exibe ordenação de Z-A corretamente
+
+- openLink: exp://q4ng5ge-anonymous-8081.exp.direct
+
+- extendedWaitUntil:
+    visible: "Explorar"
+    timeout: 10000
+
+- tapOn: "Explorar"
+- tapOn: "Ordenar"
+- tapOn: "Alfabeticamente (Z-A)"
+- tapOn: "Survival Horror"
+- tapOn: "Início"

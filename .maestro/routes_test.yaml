@@ -1,0 +1,18 @@
+appId: host.exp.exponent
+---
+
+#teste se permanece na mesma rota
+
+- openLink: exp://q4ng5ge-anonymous-8081.exp.direct
+
+- extendedWaitUntil:
+    visible: "Início"
+    timeout: 10000
+
+- tapOn: "Início"
+
+- tapOn: "Explorar"
+- tapOn: "Explorar"
+
+- tapOn: "Perfil"
+- tapOn: "Perfil"

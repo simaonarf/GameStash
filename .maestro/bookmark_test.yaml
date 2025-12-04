@@ -1,0 +1,16 @@
+appId: host.exp.exponent
+---
+
+# teste se marca e desmarca o bookmark
+
+- openLink: exp://q4ng5ge-anonymous-8081.exp.direct
+
+- extendedWaitUntil:
+    visible: "Explorar"
+    timeout: 10000
+
+- tapOn: "Call of Duty: BO7 Beta"
+- tapOn: 
+    id: "bookmark"
+- tapOn: 
+    id: "bookmark"
