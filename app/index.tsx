@@ -14,7 +14,10 @@ export default function _screen() {
       <ScreenWrapper>
         <Header />
 
-        <ScrollView>
+        <ScrollView style={{ flex: 1 }}
+          contentContainerStyle={{
+            paddingBottom: 120,
+          }}>
           <Main />
         </ScrollView>
 

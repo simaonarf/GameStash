@@ -1,16 +1,35 @@
+import games from "@/services/games";
 import { useActionSheet } from "@expo/react-native-action-sheet";
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import CategoryCard from "./CategoryCard";
 
-export default function MyComponent() {
+const initialGenres = Array.from(new Set(games.flatMap((g) => g.data.map((d) => d.genre))));
+
+export default function List() {
   const { showActionSheetWithOptions } = useActionSheet();
 
-  const options = ["Cancelar", "Alfabeticamente", "Releveância"];
+  const [selectedOption, setSelectedOption] = useState("Relevância");
+
+  const options = ["Cancelar", "Alfabeticamente (A-Z)", "Alfabeticamente (Z-A)", "Relevância"];
   const destructiveButtonIndex = 0;
-  const cancelButtonIndex = 2;
+  const cancelButtonIndex = 3;
+
+  const getSortedGenres = () => {
+    const sortedGenres = [...initialGenres];
+
+    if (selectedOption === "Alfabeticamente (A-Z)") {
+      return sortedGenres.sort((a, b) => a.localeCompare(b));
+    }
+
+    if (selectedOption === "Alfabeticamente (Z-A)") {
+      return sortedGenres.sort((a, b) => b.localeCompare(a));
+    }
+
+    return initialGenres;
+  };
 
   const handleOpen = () => {
-    console.log("Botão Aberto");
     showActionSheetWithOptions(
       {
         options,
@@ -18,40 +37,78 @@ export default function MyComponent() {
         destructiveButtonIndex,
       },
       (buttonIndex) => {
-        console.log("Selected: ", buttonIndex);
+        if (typeof buttonIndex === "number" && buttonIndex !== 0) {
+          const selectedValue = options[buttonIndex];
+          setSelectedOption(selectedValue);
+        }
       }
     );
   };
 
+  const genresToRender = getSortedGenres();
+
   return (
-    <>
-      <View style={styles.container}>
-        <TouchableOpacity style={[styles.loginButton, styles.fixedButton]} onPress={handleOpen}>
-          <Text style={styles.text}>Ordenar:</Text>
+    <View style={{ flex: 1 }}>
+      <View style={styles.fullContainer}>
+        <View style={styles.header}>
+
+        </View>
+
+        <FlatList
+          data={genresToRender}
+          renderItem={({ item }) => <CategoryCard name={item} />}
+          keyExtractor={(item) => item}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+          showsVerticalScrollIndicator={false}
+          style={styles.listContainer}
+        />
+
+        <TouchableOpacity onPress={handleOpen} style={styles.sortButton}>
+          <Text style={styles.sortButtonText}>Ordenar</Text>
         </TouchableOpacity>
       </View>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  fullContainer: {
+    flex: 1,
+    paddingHorizontal: 15,
+  },
+  listContainer: {
     flex: 1,
   },
-  loginButton: {
-    backgroundColor: "#FFD700",
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
+    paddingVertical: 10,
   },
-  fixedButton: {
-    position: "absolute",
-    bottom: 30,
-    alignSelf: "center",
-  },
-  text: {
-    color: "#000",
+  headerText: {
     fontSize: 16,
+    fontWeight: "600",
+    color: "white"
+  },
+  sortButton: {
+    position: 'absolute',
+    backgroundColor: "#f7c222",
+    borderRadius: 10,
+    left: "50%",
+    transform: [{ translateX: -75 }],
+    bottom: 20,
+    right: 20,
+    alignSelf: "center",
+    paddingVertical: 12,
+  },
+  sortButtonText: {
+    fontSize: 16,
+    color: "#000",
+    textAlign: "center"
+  },
+  row: {
+    justifyContent: "space-between",
+    marginBottom: 12,
   },
 });

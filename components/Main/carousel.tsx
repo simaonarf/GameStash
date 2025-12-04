@@ -4,22 +4,36 @@ import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function Carousel({ children }: PropsWithChildren) {
     return (
-        <ScrollView horizontal={true}>
-            <View style={styles.cardsRow}>
-                {children}
-            </View>
-        </ScrollView>
+        <View style={styles.cardWrapper}>
+            <ScrollView
+                horizontal
+                testID="carousel"
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.cardsRow}
+            >
+                {React.Children.map(children, (child, index) => (
+                    <View style={styles.cardItem} key={index}>
+                        {child}
+                    </View>
+                ))}
+            </ScrollView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: theme.dimension.sm,
+    cardWrapper: {
+        width: "100%",
+        paddingVertical: theme.dimension.sm,
     },
+
     cardsRow: {
         flexDirection: "row",
-        gap: 15,
+        alignItems: "flex-start",
+        paddingHorizontal: theme.dimension.xs,
+    },
+
+    cardItem: {
+        marginRight: 15,
     },
 });
