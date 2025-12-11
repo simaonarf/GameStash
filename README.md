@@ -4,15 +4,15 @@
 
  ### Tela Início
 
-<img src="https://res.cloudinary.com/dew5wuua0/image/upload/v1760029174/gameStash/Screenshot_20251009_133653_Expo_Go_st3cx3.jpg" width="300" />
+<img src="https://res.cloudinary.com/dew5wuua0/image/upload/v1765457135/gameStash/GameStash0.2/Screenshot_20251211_093938_Expo_Go_njtcoy.jpg" width="300" />
 
  ### Tela Explorar
 
-<img src="https://res.cloudinary.com/dew5wuua0/image/upload/v1760029431/gameStash/Screenshot_20251009_140200_Expo_Go_qzzpgu.jpg" width="300" />
+<img src="https://res.cloudinary.com/dew5wuua0/image/upload/v1765457132/gameStash/GameStash0.2/Screenshot_20251211_093947_Expo_Go_z9eqab.jpg" width="300" />
 
  ### Tela Login
 
-<img src="https://res.cloudinary.com/dew5wuua0/image/upload/v1760029174/gameStash/Screenshot_20251009_133701_Expo_Go_p3m2iy.jpg" width="300" />
+<img src="https://res.cloudinary.com/dew5wuua0/image/upload/v1765457132/gameStash/GameStash0.2/Screenshot_20251211_093952_Expo_Go_gad43h.jpg" width="300" />
 
 # Manual de Execução 
 
