@@ -10,8 +10,10 @@
     "test": "jest --watchAll"
   },
   "dependencies": {
+    "@andresjesse/bobber-ui": "^1.0.3",
     "@expo/react-native-action-sheet": "^4.1.1",
     "@expo/vector-icons": "^15.0.2",
+    "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/native": "^7.1.8",
     "expo": "~54.0.12",
     "expo-blur": "~15.0.7",
@@ -26,11 +28,14 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.4",
+    "react-native-keyboard-controller": "1.18.5",
     "react-native-reanimated": "~4.1.1",
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0",
     "react-native-web": "~0.21.0",
-    "react-native-worklets": "0.5.1"
+    "react-native-worklets": "0.5.1",
+    "zod": "^4.3.6",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@testing-library/react-native": "^13.3.3",

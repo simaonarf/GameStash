@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
 
     paddingBottom: 18,
-    /*     backgroundColor: theme.footerColor, */
+    backgroundColor: "rgba(0,0,0,0.25)",
   },
 });
 

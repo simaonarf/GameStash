@@ -1,4 +1,4 @@
-import games from "@/services/games";
+import games from "@/services/gamesCategories";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";

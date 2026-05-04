@@ -1,3 +1,4 @@
+import { games } from "@/services/games";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import GameBanner from "./banner";
@@ -6,13 +7,14 @@ import Carousel from "./carousel";
 
 export default function Container() {
 
-    const [bookmarkCount, setBookmarkCount] = useState(0);
+    const [savedGames, setSavedGames] = useState<Record<number, boolean>>({});
 
-    function handleSave(saved: boolean) {
-        setBookmarkCount(prev => {
-            const newCount = saved ? prev + 1 : prev - 1;
-            console.log("Bookmarks feitos:", newCount);
-            return newCount;
+    function handleSave(id: number, value: boolean) {
+        setSavedGames(prev => {
+            const updated = { ...prev, [id]: value };
+            console.log("Bookmark feito para ID:", id);
+            console.log("Estado atual:", updated);
+            return updated;
         });
     }
 
@@ -23,25 +25,19 @@ export default function Container() {
 
             <Text style={styles.text}>Novidades da Semana</Text>
             <Carousel>
-                <Card uri="https://image.api.playstation.com/vulcan/ap/rnd/202508/2503/d975a2a2d80276d9891d8d3430fb8ec7ed2e4ad807707e76.png"
-                    onToggleSave={handleSave} />
-
-                <Card uri="https://m.media-amazon.com/images/M/MV5BODA2YzRkODktNTIwYi00ZDk1LThlMTAtYzE4MGEyODM4NzZlXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
-                    onToggleSave={handleSave} />
-
-                <Card uri="https://cdn1.epicgames.com/spt-assets/4c57275be6f1469b9ae10006f7429a81/f1-25-5gfry.jpg"
-                    onToggleSave={handleSave} />
+                {
+                    games.map(item => <Card
+                        id={item.id}
+                        title={item.title}
+                        uri={item.uri}
+                        bookmark={savedGames[item.id] ?? false}
+                        onToggleSave={(id, value) => handleSave(id, value)}
+                    />)
+                }
             </Carousel>
             <Text style={styles.text}>Popular</Text>
             <Carousel>
-                <Card uri="https://image.api.playstation.com/cdn/UP1004/CUSA03041_00/Hpl5MtwQgOVF9vJqlfui6SDB5Jl4oBSq.png"
-                    onToggleSave={handleSave} />
 
-                <Card uri="https://image.api.playstation.com/vulcan/ap/rnd/202111/3013/cKZ4tKNFj9C00giTzYtH8PF1.png"
-                    onToggleSave={handleSave} />
-
-                <Card uri="https://image.api.playstation.com/cdn/UP0177/CUSA00363_00/uyYz2NhJU4DXr7asqSb6S3fsQjIs9475.png"
-                    onToggleSave={handleSave} />
             </Carousel>
 
 

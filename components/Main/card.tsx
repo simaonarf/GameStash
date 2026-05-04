@@ -1,22 +1,35 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { router } from "expo-router";
 import React, { useRef, useState } from "react";
 import { Animated, Image, Pressable, StyleSheet, View } from "react-native";
 
-export default function Card({
-    uri,
-    onToggleSave,
-}: {
-    uri: string;
-    onToggleSave: (saved: boolean) => void;
-}) {
-    const [saved, setSaved] = useState(false);
+export interface CardGameProps {
+    id: number,
+    title: string,
+    description?: string,
+    status?: string,
+    uri: string,
+    bookmark?: boolean
+    onToggleSave?: (id: number, value: boolean) => void;
+}
+
+export default function Card(
+    { id, title, uri, bookmark, onToggleSave }: CardGameProps) {
+    const [saved, setSaved] = useState(bookmark ?? false);
+
 
     const scaleAnim = useRef(new Animated.Value(1)).current;
+
+    function handleCardPress() {
+        router.push({ pathname: "/game/[id]", params: { id: String(id), title: String(title) } });
+    }
 
     function handlePress() {
         const newState = !saved;
         setSaved(newState);
-        onToggleSave(newState);
+        if (onToggleSave) {
+            onToggleSave(id, newState);
+        }
 
         Animated.sequence([
             Animated.timing(scaleAnim, {
@@ -33,20 +46,22 @@ export default function Card({
     }
 
     return (
-        <View style={styles.cardContainer}>
+        <Pressable onPress={handleCardPress}>
+            <View style={styles.cardContainer}>
 
-            <Pressable style={styles.saveButton} onPress={handlePress} testID="bookmark">
-                <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-                    <FontAwesome
-                        name={saved ? "bookmark" : "bookmark-o"}
-                        size={18}
-                        color="white"
-                    />
-                </Animated.View>
-            </Pressable>
+                <Pressable style={styles.saveButton} onPress={handlePress} testID="bookmark">
+                    <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+                        <FontAwesome
+                            name={saved ? "bookmark" : "bookmark-o"}
+                            size={18}
+                            color="white"
+                        />
+                    </Animated.View>
+                </Pressable>
 
-            <Image source={{ uri }} style={styles.image} />
-        </View>
+                <Image source={{ uri }} style={styles.image} />
+            </View>
+        </Pressable>
     );
 }
 
