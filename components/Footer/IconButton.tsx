@@ -1,4 +1,4 @@
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { Feather } from "@expo/vector-icons";
 import React, { ReactNode } from "react";
 import {
   StyleSheet,
@@ -19,7 +19,7 @@ export default function IconButton({ icon, text, onPress, active }: IconButtonPr
 
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <AntDesign name={icon as any} size={24} color={color} />
+      <Feather name={icon as any} size={24} color={color} />
       <Text style={[styles.text, { color }]}>{text}</Text>
     </TouchableOpacity>
   );
