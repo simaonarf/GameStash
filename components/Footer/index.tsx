@@ -19,12 +19,13 @@ export default function Footer() {
   const handleHomeClick = () => navigateIfNotCurrent('/');
   const handleFavoriteClick = () => navigateIfNotCurrent('/favorites');
   const handleLoginClick = () => navigateIfNotCurrent('/login');
+
   return (
     <View style={styles.container}>
-      <IconButton icon="rocket" text="Explorar" onPress={handleFavoriteClick} active={pathname === '/favorites'}
+      <IconButton icon="grid" text="Explorar" onPress={handleFavoriteClick} active={pathname === '/favorites'}
       />
       <IconButton icon="home" text="Início" onPress={handleHomeClick} active={pathname === '/'} />
-      <IconButton icon="profile" text="Perfil" onPress={handleLoginClick} active={pathname === '/login'} />
+      <IconButton icon="user" text="Perfil" onPress={handleLoginClick} active={pathname === '/login'} />
     </View>
   );
 }
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
 
     paddingBottom: 18,
-    /*     backgroundColor: theme.footerColor, */
+    backgroundColor: "rgba(54, 54, 54, 0.38)",
   },
 });
 
