@@ -2,8 +2,8 @@ import { games } from "@/services/games";
 import { Button } from "@andresjesse/bobber-ui";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-
+import { StyleSheet, Text, View } from "react-native";
+import GamePoster from "./gamePoster";
 
 export default function GamePage() {
     const { id } = useLocalSearchParams();
@@ -14,7 +14,9 @@ export default function GamePage() {
 
     return (
         <View style={styles.container}>
-            <Image source={{ uri: game.uri }} style={styles.image} />
+
+            <GamePoster></GamePoster>
+
             <Text style={styles.text}>{game.title}</Text>
             <Text style={styles.subText}>{game.description}</Text>
 
@@ -22,7 +24,7 @@ export default function GamePage() {
             <View style={styles.statusContainer}>
                 <View style={styles.row}>
                     <View style={styles.btn}>
-                        <Button title="Backlog" size="lg" variant="light" color="red">
+                        <Button title={game.status ?? "Sem status"} size="lg" variant="light" color="red">
                         </Button>
                     </View>
                     <View style={styles.btn}>
@@ -77,18 +79,5 @@ const styles = StyleSheet.create({
 
     btn: {
         flex: 1,
-    },
-
-    card: {
-        backgroundColor: "white",
-        width: 150,
-        height: 200,
-    },
-    image: {
-        width: 150,
-        height: 210,
-        borderRadius: 12,
-        marginBottom: 25,
-        marginTop: 25
     },
 })
