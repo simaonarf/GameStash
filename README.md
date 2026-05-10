@@ -97,20 +97,20 @@ O app utilizará:
 ~~- Criação das telas iniciais~~
 
 ### Sprint 2 — UI e Componentes (08/04 - 14/04)
-- Criação de componentes reutilizáveis
-- Estilização de telas
-- Inserção de dados mockados
+~~- Criação de componentes reutilizáveis~~
+~~- Estilização de telas~~
+~~- Inserção de dados mockados~~
 
 ### Sprint 3 — Funcionalidades básicas (15/04 - 21/04)
-- Implementação de categorias e status
-- Estado global (Zustand)
-- Simulação de interações
+~~- Implementação de categorias e status
+~- Estado global (Zustand)
+~- Simulação de interações
 
 ### Sprint 4 — Finalização parcial (22/04 - 30/04)
-- Revisão geral
-- Ajustes de UI/UX
-- Gravação do vídeo
-- Atualização do README
+~~- Revisão geral
+~ - Ajustes de UI/UX
+~ - Gravação do vídeo
+~ - Atualização do README
 
 ---
 
