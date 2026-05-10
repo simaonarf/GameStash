@@ -31,13 +31,21 @@ export default function Container() {
                         title={item.title}
                         uri={item.uri}
                         bookmark={savedGames[item.id] ?? false}
-                        onToggleSave={(id, value) => handleSave(id, value)}
+
                     />)
                 }
             </Carousel>
             <Text style={styles.text}>Popular</Text>
-            <Carousel>
 
+            <Carousel>
+                {
+                    games.filter(games => games.id >= 4 && games.id <= 7).map(item => <Card
+                        id={item.id}
+                        title={item.title}
+                        uri={item.uri}
+                        bookmark={savedGames[item.id] ?? false}
+                    />)
+                }
             </Carousel>
 
 
@@ -58,7 +66,7 @@ const styles = StyleSheet.create({
 
     text: {
         color: "#fff",
-        fontSize: 21,
+        fontSize: 22.5,
         fontWeight: "bold",
         alignSelf: "flex-start",
         marginLeft: 10,
