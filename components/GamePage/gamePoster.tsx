@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         width: '110%',
         height: '100%',
         transform: [{ scale: 1.1 }],
-        opacity: 0.1,
+        opacity: 0.2,
         borderRadius: 35
     },
 

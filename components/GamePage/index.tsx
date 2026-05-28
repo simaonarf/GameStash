@@ -2,8 +2,9 @@ import { games } from "@/services/games";
 import { Button } from "@andresjesse/bobber-ui";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import GamePoster from "./gamePoster";
+import ReviewCard from "./reviewCard";
 
 export default function GamePage() {
     const { id } = useLocalSearchParams();
@@ -13,29 +14,36 @@ export default function GamePage() {
     if (!game) return <Text>Game não encontrado</Text>;
 
     return (
-        <View style={styles.container}>
+        <ScrollView>
 
-            <GamePoster></GamePoster>
+            <View style={styles.container}>
 
-            <Text style={styles.text}>{game.title}</Text>
-            <Text style={styles.subText}>{game.description}</Text>
+                <GamePoster></GamePoster>
+
+                <Text style={styles.text}>{game.title}</Text>
+                <Text style={styles.subText}>{game.description}</Text>
 
 
-            <View style={styles.statusContainer}>
-                <View style={styles.row}>
-                    <View style={styles.btn}>
-                        <Button title={game.status ?? "Sem status"} size="lg" variant="light" color="red">
-                        </Button>
-                    </View>
-                    <View style={styles.btn}>
-                        <Button title="6.7" size="lg" variant="light" color="yellow"></Button>
-                    </View>
-                    <View style={styles.btn}>
-                        <Button title="5" size="lg" variant="light" color="gray"></Button>
+                <View style={styles.statusContainer}>
+                    <View style={styles.row}>
+                        <View style={styles.btn}>
+                            <Button title={game.status ?? "Sem status"} size="lg" variant="light" color="red">
+                            </Button>
+                        </View>
+                        <View style={styles.btn}>
+                            <Button title="6.7" size="lg" variant="light" color="yellow"></Button>
+                        </View>
+                        <View style={styles.btn}>
+                            <Button title="5" size="lg" variant="light" color="gray"></Button>
+                        </View>
                     </View>
                 </View>
+
+                <Text style={styles.text}>Reviews</Text>
+
+                <ReviewCard></ReviewCard>
             </View>
-        </View>
+        </ScrollView>
     );
 }
 
