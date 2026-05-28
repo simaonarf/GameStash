@@ -2,7 +2,11 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
-export default function LoginForm() {
+type Props = {
+    onSwitch: () => void;
+}
+
+export default function LoginForm({ onSwitch }: Props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -16,6 +20,7 @@ export default function LoginForm() {
         }
 
     }, [email, password]);
+
 
     return (
         <View style={styles.container}>
@@ -53,6 +58,10 @@ export default function LoginForm() {
             <TouchableOpacity style={styles.googleButton} activeOpacity={0.8}>
                 <View style={styles.googleIcon}><AntDesign name="google" size={24} color="white" /></View>
                 <Text style={styles.googleText}>Continuar com Google</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity activeOpacity={0.8} onPress={onSwitch}>
+                <Text style={styles.subText}>Não possui uma conta? Cadastre-se</Text>
             </TouchableOpacity>
         </View>
     );
@@ -132,4 +141,14 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         paddingLeft: 12,
     },
+
+    subText: {
+        color: "#a4a4a4",
+        fontSize: 13,
+        marginVertical: 14,
+        textDecorationLine: "underline",
+        textAlign: "center"
+    },
 });
+
+export { styles };
