@@ -26,14 +26,14 @@ export default function GamePage() {
 
                 <View style={styles.statusContainer}>
                     <View style={styles.row}>
-                        <View style={styles.btn}>
+                        <View>
                             <Button title={game.status ?? "Sem status"} size="lg" variant="light" color="red">
                             </Button>
                         </View>
-                        <View style={styles.btn}>
+                        <View>
                             <Button title="6.7" size="lg" variant="light" color="yellow"></Button>
                         </View>
-                        <View style={styles.btn}>
+                        <View>
                             <Button title="5" size="lg" variant="light" color="gray"></Button>
                         </View>
                     </View>
@@ -85,7 +85,4 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
 
-    btn: {
-        flex: 1,
-    },
 })
