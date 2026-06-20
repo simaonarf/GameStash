@@ -1,13 +1,41 @@
-import { games } from "@/services/games";
-import React, { useState } from "react";
+
+import { default as React, useCallback, useMemo, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import GameBanner from "./banner";
 import Card from "./card";
 import Carousel from "./carousel";
 
+import { useFocusEffect } from '@react-navigation/native';
+import GameRepository, { Game } from "../../src/database/GameRepository";
+
 export default function Container() {
+    /* 
+        const [savedGames, setSavedGames] = useState<Record<number, boolean>>({});
+     */
+    const [dbGames, setDbGames] = useState<Game[]>([]);
+    const [loading, setLoading] = useState(true);
 
     const [savedGames, setSavedGames] = useState<Record<number, boolean>>({});
+
+    const gameRepository = useMemo(() => new GameRepository(), []);
+
+    useFocusEffect(
+        useCallback(() => {
+            async function fetchGames() {
+                try {
+                    setLoading(true);
+                    const data = await gameRepository.all();
+                    setDbGames(data);
+                } catch (error) {
+                    console.error("Erro ao buscar jogos:", error);
+                } finally {
+                    setLoading(false);
+                }
+            }
+
+            fetchGames();
+        }, [])
+    );
 
     function handleSave(id: number, value: boolean) {
         setSavedGames(prev => {
@@ -20,26 +48,28 @@ export default function Container() {
 
     return (
         <View style={styles.container}>
-
             <GameBanner></GameBanner>
 
             <Text style={styles.text}>Novidades da Semana</Text>
             <Carousel>
                 {
-                    games.map(item => <Card
-                        id={item.id}
-                        title={item.title}
-                        uri={item.uri}
-                        bookmark={savedGames[item.id] ?? false}
-
-                    />)
+                    dbGames.map(item => (
+                        <Card
+                            key={item.id}
+                            id={item.id}
+                            title={item.title}
+                            uri={item.uri}
+                            bookmark={savedGames[item.id] ?? false}
+                        // onSave={handleSave}
+                        />
+                    ))
                 }
             </Carousel>
             <Text style={styles.text}>Popular</Text>
 
             <Carousel>
                 {
-                    games.filter(games => games.id >= 4 && games.id <= 7).map(item => <Card
+                    dbGames.filter(games => games.id >= 2 && games.id <= 3).map(item => <Card
                         id={item.id}
                         title={item.title}
                         uri={item.uri}
@@ -47,8 +77,6 @@ export default function Container() {
                     />)
                 }
             </Carousel>
-
-
         </View>
     );
 }
