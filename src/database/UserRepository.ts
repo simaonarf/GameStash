@@ -15,7 +15,12 @@ export default class UserRepository {
 
     public async up() {
         await db.runAsync(
-            "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username VARCHAR NOT NULL, password VARCHAR NOT NULL, email VARCHAR NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);"
+            `CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            username VARCHAR NOT NULL, 
+            password VARCHAR NOT NULL, 
+            email VARCHAR NOT NULL, 
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`
         );
     }
 
