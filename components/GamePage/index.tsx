@@ -1,24 +1,68 @@
-import { games } from "@/services/games";
+import GameRepository, { Game } from "@/src/database/GameRepository";
+import ReviewRepository, { Review } from "@/src/database/ReviewRepository";
+
 import { Button } from "@andresjesse/bobber-ui";
 import { useLocalSearchParams } from "expo-router";
-import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import GamePoster from "./gamePoster";
 import ReviewCard from "./reviewCard";
 
 export default function GamePage() {
     const { id } = useLocalSearchParams();
 
-    const game = games.find(g => g.id === Number(id));
+    const [game, setGame] = useState<Game | null>(null);
+    const [gameReviews, setGameReviews] = useState<Review[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    if (!game) return <Text>Game não encontrado</Text>;
+    const gameRepository = useMemo(() => new GameRepository(), []);
+    const reviewRepository = useMemo(() => new ReviewRepository(), []);
+
+    useEffect(() => {
+        async function fetchGame() {
+            try {
+                if (!id) return;
+
+                const fetchedGame = await gameRepository.find(Number(id));
+                setGame(fetchedGame);
+
+                if (fetchedGame) {
+                    const fetchedReviews = await reviewRepository.findByGameId(fetchedGame.id);
+                    setGameReviews(fetchedReviews);
+                }
+            } catch (error) {
+                console.error("Erro ao carregar os detalhes do jogo:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchGame();
+    }, [id]);
+
+    if (loading) {
+        return (
+            <View>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        );
+    }
+
+    if (!game) {
+        return (
+            <View>
+                <Text>Game não encontrado</Text>
+            </View>
+        );
+    }
+
 
     return (
         <ScrollView>
 
             <View style={styles.container}>
 
-                <GamePoster></GamePoster>
+                <GamePoster uri={game.uri}></GamePoster>
 
                 <Text style={styles.text}>{game.title}</Text>
                 <Text style={styles.subText}>{game.description}</Text>
@@ -31,7 +75,7 @@ export default function GamePage() {
                             </Button>
                         </View>
                         <View>
-                            <Button title="6.7" size="lg" variant="light" color="yellow"></Button>
+                            <Button title="3.7" size="lg" variant="light" color="yellow"></Button>
                         </View>
                         <View>
                             <Button title="5" size="lg" variant="light" color="gray"></Button>
@@ -41,7 +85,19 @@ export default function GamePage() {
 
                 <Text style={styles.text}>Reviews</Text>
 
-                <ReviewCard></ReviewCard>
+                <ScrollView horizontal={true} >
+                    {
+                        gameReviews.map(item => <ReviewCard
+                            key={item.id}
+                            id={item.id}
+                            title={item.title ?? undefined}
+                            description={item.comment ?? undefined}
+                            rating={item.rating}
+                            game_id={item.game_id}
+                            user_id={item.user_id}
+                        />)
+                    }
+                </ScrollView>
             </View>
         </ScrollView>
     );

@@ -1,26 +1,18 @@
-import { games } from "@/services/games";
-import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 
-export default function GamePoster() {
-    const { id } = useLocalSearchParams();
-
-    const game = games.find(g => g.id === Number(id));
-
-    if (!game) return <Text>Game não encontrado</Text>;
-
+export default function GamePoster(uri: any) {
 
     return (
         <View style={styles.glowContainer}>
             <Image
-                source={{ uri: game.uri }}
+                source={uri}
                 style={styles.backgroundImage}
                 blurRadius={45}
             />
 
             <View style={styles.card}>
-                <Image source={{ uri: game.uri }} style={styles.image} />
+                <Image source={uri} style={styles.image} />
             </View>
         </View>
     );

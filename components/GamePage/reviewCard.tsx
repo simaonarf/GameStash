@@ -2,20 +2,29 @@ import { AirbnbRating } from '@rneui/themed';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-interface ReviewCardProps {
+export interface ReviewCardProps {
+    id: number;
     title?: string;
     description?: string;
     rating?: number;
+    game_id: number;
+    user_id: number;
 }
 
 export default function ReviewCard({
-    title = "OK... I THINK",
-    description = "Lorem ipsum dolor sit amet, consectetur adipiscing...more",
-    rating = 5,
+    id,
+    title,
+    description,
+    rating,
+    game_id,
+    user_id,
 }: ReviewCardProps) {
     return (
         <View style={styles.card}>
-            <Text style={styles.title}>{title}</Text>
+            <View style={styles.section}>
+                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.username}>//username: {user_id}</Text>
+            </View>
 
             <Text style={styles.description}>{description}</Text>
 
@@ -39,12 +48,19 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: '#2D2D2D',
         borderRadius: 32,
-        paddingVertical: 24,
-        paddingHorizontal: 28,
+        paddingVertical: 22,
+        paddingHorizontal: 26,
         width: '100%',
-        maxWidth: 300,
+        maxWidth: 280,
         alignSelf: 'center',
+        margin: 5
     },
+    section: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+
     title: {
         color: '#FFFFFF',
         fontSize: 22,
@@ -52,6 +68,15 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         letterSpacing: 0.5,
     },
+
+    username: {
+        color: '#acacac',
+        fontSize: 14,
+        fontWeight: 'bold',
+        letterSpacing: 0.5,
+        paddingTop: 8
+    },
+
     description: {
         color: '#FFFFFF',
         fontSize: 16,
