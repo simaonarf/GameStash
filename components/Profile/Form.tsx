@@ -1,25 +1,60 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
-import React, { useEffect, useState } from "react";
+import { useRouter } from 'expo-router';
+import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { z } from 'zod';
+import { useAuth } from "../../contexts/AuthContext";
 
+const loginSchema = z.object({
+    email: z.email("Por favor, insira um e-mail válido."),
+    password: z.string().min(1, "A senha é obrigatória.")
+});
 type Props = {
     onSwitch: () => void;
 }
 
 export default function LoginForm({ onSwitch }: Props) {
+    const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
-    useEffect(() => {
-        if (email.length === 0) {
-            console.log("Email não pode estar vazio")
+    const router = useRouter();
+
+
+    const handleLogin = async () => {
+        setErrors({});
+
+        const result = loginSchema.safeParse({ email, password });
+
+        if (!result.success) {
+            const formattedErrors: Record<string, string> = {};
+
+            result.error.issues.forEach((issue) => {
+                const fieldName = issue.path[0] as string;
+                if (fieldName && !formattedErrors[fieldName]) {
+                    formattedErrors[fieldName] = issue.message;
+                }
+            });
+
+            setErrors(formattedErrors);
+            return;
         }
 
-        if (password.length === 0) {
-            console.log("Senha não pode estar vazia")
-        }
 
-    }, [email, password]);
+        setIsSubmitting(true);
+        const { success, error } = await login(result.data.email, result.data.password);
+        setIsSubmitting(false);
+
+        router.push('/profilePage')
+
+        if (!success) {
+            setErrors({ password: error ?? "Falha ao entrar." });
+            return;
+        }
+    };
+
 
 
     return (
@@ -29,24 +64,26 @@ export default function LoginForm({ onSwitch }: Props) {
             <TextInput
                 placeholder="Email"
                 placeholderTextColor="#777"
-                style={styles.input}
+                style={[styles.input, errors.email && styles.inputError]}
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
                 autoCapitalize="none"
             />
+            {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
 
             <TextInput
                 placeholder="Senha"
                 placeholderTextColor="#777"
                 secureTextEntry
-                style={styles.input}
+                style={[styles.input, errors.password && styles.inputError]}
                 value={password}
                 onChangeText={setPassword}
-            />
+            />{errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
 
-            <TouchableOpacity style={styles.loginButton} activeOpacity={0.8}>
-                <Text style={styles.loginText}>Entrar</Text>
+
+            <TouchableOpacity style={styles.loginButton} activeOpacity={0.8} onPress={handleLogin} disabled={isSubmitting}>
+                <Text style={styles.loginText}>{isSubmitting ? "Entrando..." : "Entrar"}</Text>
             </TouchableOpacity>
 
             <View style={styles.dividerContainer}>
@@ -91,6 +128,19 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#2c2c2c",
     },
+
+    inputError: {
+        borderColor: '#ff4444',
+        borderWidth: 1,
+        marginBottom: 4,
+    },
+    errorText: {
+        color: '#ff4444',
+        fontSize: 12,
+        marginBottom: 14,
+        marginLeft: 4,
+    },
+
     loginButton: {
         backgroundColor: "#f7c222",
         borderRadius: 10,

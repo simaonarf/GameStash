@@ -1,9 +1,9 @@
-import useBookmark from "@/states/useBookmark";
+import { useAuth } from "@/contexts/AuthContext";
+import { useBookmarks } from "@/contexts/BookmarkContext";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { router } from "expo-router";
 import React, { useRef } from "react";
 import { Animated, Image, Pressable, StyleSheet, View } from "react-native";
-
 
 export interface CardGameProps {
     id: number,
@@ -15,22 +15,21 @@ export interface CardGameProps {
 }
 
 export default function Card(
-    { id, title, uri, bookmark }: CardGameProps) {
-    const isBookmarked = useBookmark((state) => state.isBookmarked);
-    const setBookmark = useBookmark((state) => state.setBookmark);
+    { id, title, uri }: CardGameProps) {
+    const { user } = useAuth();
+    const { isBookmarked, toggleBookmark } = useBookmarks();
 
-    const saved = useBookmark((state) =>
-        state.bookmarks.find((b) => b.id === id)?.value ?? false
-    );
-
+    const saved = isBookmarked(id);
     const scaleAnim = useRef(new Animated.Value(1)).current;
 
     function handleCardPress() {
         router.push({ pathname: "/game/[id]", params: { id: String(id), title: String(title) } });
     }
 
-    function handlePress() {
-        setBookmark(id, !saved);
+    async function handlePress() {
+        if (!user) return;
+
+        await toggleBookmark(user.id, id);
 
         Animated.sequence([
             Animated.timing(scaleAnim, {

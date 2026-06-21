@@ -70,14 +70,14 @@ export default function GamePage() {
 
                 <View style={styles.statusContainer}>
                     <View style={styles.row}>
-                        <View>
+                        <View style={styles.statusItem}>
                             <Button title={game.status ?? "Sem status"} size="lg" variant="light" color="red">
                             </Button>
                         </View>
-                        <View>
+                        <View style={styles.statusItem}>
                             <Button title="3.7" size="lg" variant="light" color="yellow"></Button>
                         </View>
-                        <View>
+                        <View style={styles.statusItem}>
                             <Button title="5" size="lg" variant="light" color="gray"></Button>
                         </View>
                     </View>
@@ -116,12 +116,14 @@ const styles = StyleSheet.create({
     },
 
     statusContainer: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width: '100%'
     },
 
     row: {
         flexDirection: 'row',
-        gap: 45
+        gap: 12,
+        width: '100%',
     },
 
     text: {
@@ -140,5 +142,11 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginLeft: 10,
     },
+
+    statusItem: {
+        flex: 1,
+        alignItems: 'center',
+    },
+
 
 })
