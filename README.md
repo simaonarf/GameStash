@@ -26,14 +26,14 @@ Funcionando como um gerenciador de jogos, onde o usuário pode cadastrar, avalia
 - [x] Criação de componentes reutilizáveis
 - [x] Estilização das telas
 - [x] Uso de dados mockados
-- [ ] Cadastro de usuário
-- [ ] Login de usuário
-- [ ] Adicionar jogos à biblioteca
+- [x] Cadastro de usuário
+- [x] Login de usuário
+- [x] Adicionar jogos à biblioteca
 - [ ] Organização por categorias
 - [ ] Marcação de status
-- [ ] Sistema de avaliação de jogos
+- [x] Sistema de avaliação de jogos
 - [ ] Filtro e busca
-- [ ] Persistência de dados
+- [x] Persistência de dados
 - [ ] Integração com API externa
 
 ---
