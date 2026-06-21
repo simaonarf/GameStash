@@ -37,20 +37,37 @@ export default function Container() {
         }, [])
     );
 
-    function handleSave(id: number, value: boolean) {
-        setSavedGames(prev => {
-            const updated = { ...prev, [id]: value };
-            console.log("Bookmark feito para ID:", id);
-            console.log("Estado atual:", updated);
-            return updated;
-        });
-    }
-
     return (
         <View style={styles.container}>
             <GameBanner></GameBanner>
 
             <Text style={styles.text}>Novidades da Semana</Text>
+
+            <Carousel>
+                {
+                    dbGames.filter(games => games.id >= 8 && games.id <= 10).map(item => <Card
+                        id={item.id}
+                        title={item.title}
+                        uri={item.uri}
+                        bookmark={savedGames[item.id] ?? false}
+                    />)
+                }
+            </Carousel>
+
+            <Text style={styles.text}>Popular</Text>
+
+            <Carousel>
+                {
+                    dbGames.filter(games => games.id >= 3 && games.id <= 5).map(item => <Card
+                        id={item.id}
+                        title={item.title}
+                        uri={item.uri}
+                        bookmark={savedGames[item.id] ?? false}
+                    />)
+                }
+            </Carousel>
+
+            <Text style={styles.text}>Todos os Jogos</Text>
             <Carousel>
                 {
                     dbGames.map(item => (
@@ -65,18 +82,7 @@ export default function Container() {
                     ))
                 }
             </Carousel>
-            <Text style={styles.text}>Popular</Text>
 
-            <Carousel>
-                {
-                    dbGames.filter(games => games.id >= 2 && games.id <= 3).map(item => <Card
-                        id={item.id}
-                        title={item.title}
-                        uri={item.uri}
-                        bookmark={savedGames[item.id] ?? false}
-                    />)
-                }
-            </Carousel>
         </View>
     );
 }

@@ -23,7 +23,6 @@ export default function ReviewCard({
         <View style={styles.card}>
             <View style={styles.section}>
                 <Text style={styles.title}>{title}</Text>
-                <Text style={styles.username}>//username: {user_id}</Text>
             </View>
 
             <Text style={styles.description}>{description}</Text>
@@ -40,6 +39,8 @@ export default function ReviewCard({
                     starContainerStyle={styles.starContainer}
                 />
             </View>
+            <Text style={styles.username}>publicado por: {user_id}</Text>
+
         </View>
     );
 }
@@ -71,8 +72,9 @@ const styles = StyleSheet.create({
 
     username: {
         color: '#acacac',
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: 'bold',
+        fontStyle: 'italic',
         letterSpacing: 0.5,
         paddingTop: 8
     },

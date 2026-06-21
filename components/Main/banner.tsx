@@ -5,7 +5,7 @@ import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from
 
 export default function GameBanner() {
     const uri =
-        "https://blackheartprints.com/cdn/shop/files/CallOfDutyBlackOps62024GamePosterLandscapeWeb_600x.jpg?v=1717361285";
+        "https://store-images.s-microsoft.com/image/apps.24935.13758467164481545.c998f207-34a5-4a78-8843-178e2acdf371.206793b9-f38b-4616-8029-fdb3c7d0db77?h=1280";
 
 
     return (
@@ -23,15 +23,15 @@ export default function GameBanner() {
                     imageStyle={styles.imageStyle}
                 >
                     <LinearGradient
-                        colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.6)"]}
+                        colors={["rgba(0,0,0,0)", "rgba(0, 0, 0, 0.46)"]}
                         style={StyleSheet.absoluteFillObject}
                     />
                     <View style={styles.overlay} />
 
                     <View style={styles.textContainer}>
-                        <BlurView intensity={25} tint="dark" style={styles.blur}>
-                            <Text style={styles.title}>Call of Duty: BO7 Beta</Text>
-                            <Text style={styles.subtitle}>Lorem ipsum dolor</Text>
+                        <BlurView intensity={1} tint="dark" style={styles.blur}>
+                            <Text style={styles.title}>Forza Horizon 6</Text>
+                            <Text style={styles.subtitle}>Descubra as paisagens do Japão </Text>
                         </BlurView>
                     </View>
                 </ImageBackground>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         right: 0,
         height: 200,
         transform: [{ scale: 1.35 }],
-        opacity: 0.39,
+        opacity: 0.12,
         borderRadius: 16,
     },
     image: {
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     blur: {
         padding: 16,
         borderRadius: 16,
-        backgroundColor: "rgba(0,0,0,0.25)",
+        backgroundColor: "rgba(0, 0, 0, 0)",
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,

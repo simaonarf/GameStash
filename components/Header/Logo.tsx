@@ -9,9 +9,6 @@ export default function Logo() {
         source={require('../../public/images/1764601304904.png')}
         style={styles.image}
       />
-      {/*       <View style={styles.image}>
-        <MaterialCommunityIcons name="gamepad-up" size={48} color="yellow" testID="icon" />
-      </View> */}
       <Text style={styles.text}>GameStash</Text>
     </View>
   );
@@ -24,5 +21,5 @@ const styles = StyleSheet.create({
     gap: theme.dimension.sm,
   },
   image: { width: 36, height: 36, margin: 12 },
-  text: { color: "#fff", fontSize: 18, fontWeight: "bold" },
+  text: { color: "#fff", fontSize: 22, fontWeight: "bold" },
 });
