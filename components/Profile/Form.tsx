@@ -56,6 +56,7 @@ export default function LoginForm({ onSwitch }: Props) {
     };
 
 
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Entrar</Text>
