@@ -1,3 +1,4 @@
+import * as Crypto from "expo-crypto";
 import db from "./SQLiteDatabase";
 
 export type User = {
@@ -28,10 +29,18 @@ export default class UserRepository {
         await db.runAsync("DROP TABLE users;");
     }
 
+    private async hashPassword(password: string): Promise<string> {
+        return await Crypto.digestStringAsync(
+            Crypto.CryptoDigestAlgorithm.SHA256,
+            password
+        );
+    }
+
     public async create(user: User) {
+        const hashedPassword = await this.hashPassword(user.password);
         const result = await db.runAsync(
             "INSERT INTO users (username, password, email) values (?, ?, ?);",
-            [user.username, user.password, user.email]
+            [user.username, hashedPassword, user.email]
         );
         return result.lastInsertRowId;
     }
@@ -39,5 +48,23 @@ export default class UserRepository {
     public async all() {
         const result = await db.getAllAsync<User>("SELECT * FROM users");
         return result;
+    }
+
+    public async findByEmail(email: string): Promise<User | null> {
+        const result = await db.getFirstAsync<User>(
+            "SELECT * FROM users WHERE email = ?;",
+            [email]
+        );
+        return result ?? null;
+    }
+
+    public async authenticate(email: string, password: string): Promise<User | null> {
+        const user = await this.findByEmail(email);
+        if (!user) return null;
+
+        const hashedInput = await this.hashPassword(password);
+        if (hashedInput !== user.password) return null;
+
+        return user;
     }
 }
